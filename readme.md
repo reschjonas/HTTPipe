@@ -2,7 +2,7 @@
 
 A simple cross-platform GUI tool built with Python and pywebview to quickly serve a single file over HTTP. Designed with penetration testing and local network file transfers in mind.
 
-![HTTPipe Screenshot](screenshot.png)
+![HTTPipe Screenshot](screen.png)
 
 ## Description
 
