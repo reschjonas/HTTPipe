@@ -31,7 +31,7 @@ HTTPipe provides a straightforward graphical interface to select a file and inst
 
 2.  **Clone the Repository:**
     ```bash
-    git clone <your-repository-url>
+    git clone https://github.com/reschjonas/HTTPipe
     cd HTTPipe
     ```
 
