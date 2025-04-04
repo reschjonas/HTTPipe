@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PenTool File Transfer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-terminal"></i> HTTPipe File Transfer</h1>
+
+        <div class="section file-selection">
+            <label for="file-path"><i class="fas fa-file-alt"></i> File to Transfer:</label>
+            <div class="file-input-wrapper">
+                <input type="text" id="file-path" readonly placeholder="No file selected">
+                <i class="fas fa-file-import file-icon"></i>
+            </div>
+            <button id="select-file-btn"><i class="fas fa-folder-open"></i> Select File</button>
+        </div>
+
+        <div class="section network-config">
+            <div class="ip-selection-group">
+                <label for="ip-address-select"><i class="fas fa-network-wired"></i> IP Address:</label>
+                <select id="ip-address-select">
+                    <option value="127.0.0.1">Loading...</option>
+                    <!-- Other IPs will be populated here -->
+                    <option value="custom">Enter Custom IP...</option>
+                </select>
+                <input type="text" id="ip-address-custom" placeholder="Enter custom IP" style="display: none;"> 
+            </div>
+            <div class="port-selection-group">
+                <label for="port"><i class="fas fa-plug"></i> Port:</label>
+                <input type="number" id="port" value="8000" min="1" max="65535">
+            </div>
+        </div>
+
+        <div class="section server-controls">
+            <button id="start-server-btn" disabled><i class="fas fa-play"></i> Start Server</button>
+            <button id="stop-server-btn" disabled><i class="fas fa-stop"></i> Stop Server</button>
+            <span id="server-status" class="stopped">Status: Stopped</span>
+        </div>
+
+        <div class="section command-section">
+            <h2><i class="fas fa-terminal"></i> Target Machine Commands</h2>
+            <div class="command-tabs">
+                <button class="tab-button active" data-tab="download-commands"><i class="fas fa-download"></i> Download</button>
+                <button class="tab-button" data-tab="shell-commands"><i class="fas fa-code"></i> Shell Prep</button>
+            </div>
+            <div class="tab-content active" id="download-commands">
+                <pre id="download-command">Select a file and start the server.</pre>
+                <button id="copy-command-btn" disabled><i class="fas fa-copy"></i> Copy Command</button>
+            </div>
+            <div class="tab-content" id="shell-commands">
+                <div class="shell-cmd-block">
+                    <h3>Upgrade Limited Shell</h3>
+                    <div class="command-block">
+                        <span class="command-title"><i class="fas fa-terminal" style="color:#ef4444"></i> Python:</span>
+                        <code>python -c 'import pty; pty.spawn("/bin/bash")'</code>
+                        <button class="copy-single-btn" data-cmd="python -c 'import pty; pty.spawn(\"/bin/bash\")'"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="command-block">
+                        <span class="command-title"><i class="fas fa-terminal" style="color:#3b82f6"></i> Bash:</span>
+                        <code>SHELL=/bin/bash script -q /dev/null</code>
+                        <button class="copy-single-btn" data-cmd="SHELL=/bin/bash script -q /dev/null"><i class="fas fa-copy"></i> Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section pentest-tools">
+            <h2><i class="fas fa-wrench"></i> Pentest Utilities</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3><i class="fas fa-file-code"></i> File 2 Base64</h3>
+                    <p>Convert file to base64 for copy-paste transfer</p>
+                    <button id="convert-base64-btn" disabled><i class="fas fa-file-export"></i> Convert Current File</button>
+                    <div class="form-group">
+                        <label for="base64-decode-cmd">Decode Command:</label>
+                        <select id="base64-decode-cmd">
+                            <option value="linux">Linux (base64)</option>
+                            <option value="windows">Windows (certutil)</option>
+                        </select>
+                    </div>
+                    <div id="base64-output-container" class="hidden">
+                        <h4>Encoded Data:</h4>
+                        <pre id="base64-output" class="output-pre"></pre>
+                        <h4>Decode Command:</h4>
+                        <pre id="base64-decode-command" class="output-pre"></pre>
+                        <button id="copy-base64-btn"><i class="fas fa-copy"></i> Copy Decode Command</button>
+                    </div>
+                </div>
+                
+                <div class="tool-card">
+                    <h3><i class="fas fa-file-medical"></i> File Chunker</h3>
+                    <p>Split large files into smaller chunks</p>
+                    <div class="form-group">
+                        <label for="split-size">Chunk Size (KB):</label>
+                        <input type="number" id="split-size" value="1024" min="16" max="10240">
+                    </div>
+                    <button id="split-file-btn" disabled><i class="fas fa-cut"></i> Split Current File</button>
+                    <div id="split-results" class="hidden">
+                        <h4>Chunks Created:</h4>
+                        <ul id="chunk-list"></ul>
+                        <pre id="chunk-reassembly-cmd" class="output-pre"></pre>
+                        <button id="copy-reassembly-cmd"><i class="fas fa-copy"></i> Copy Reassembly Command</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="notification-area"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,1 @@
+pywebview[qt]>=4.0 
